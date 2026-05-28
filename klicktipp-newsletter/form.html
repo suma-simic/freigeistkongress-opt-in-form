@@ -1,0 +1,109 @@
+<!--
+  ═══════════════════════════════════════════════════════════════════════════
+  Freigeistkongress · KlickTipp Newsletter-Opt-In (Raw-Code-Variante)
+  ═══════════════════════════════════════════════════════════════════════════
+
+  Direkter Form-Embed von KlickTipp. Submitted via POST an die
+  KlickTipp-Listbuilding-API (kein eigener Server-Code noetig). Setzt
+  automatisch den in KlickTipp am Form konfigurierten Tag (hier:
+  "NL - Opt-In_freigeistkongress").
+
+  Form-ID:   352074
+  KlickTipp-Form-API-Key: ist im action-Form als hidden-Field "apikey"
+                          enthalten. Dieser Key ist NICHT geheim, er
+                          identifiziert nur die Form (vergleichbar mit
+                          einer Public-Form-ID). Liegt jeder KlickTipp-
+                          Embed-Form mit drin.
+
+  Pflicht-Skripte (vor </body>):
+    <link rel="stylesheet" href="form.css">
+    <script src="https://scripts.cdn.klicktipp.cloud/captcha/protect.js"></script>
+
+  Das Captcha-Script ist KlickTipp's Anti-Bot-Schutz und MUSS eingebunden
+  sein, sonst werden Submissions als Spam abgewiesen.
+  ═══════════════════════════════════════════════════════════════════════════
+-->
+
+<div id="form-352074-wrapper" class="klicktipp-form-wrapper">
+  <form
+    id="ktv2-form-352074"
+    class="klicktipp-form"
+    accept-charset="UTF-8"
+    method="post"
+    action="https://app.klicktipp.com/api/subscriber/signin.html">
+
+    <!-- Form-API-Key (oeffentlich, identifiziert die Form bei KlickTipp) -->
+    <input type="hidden" id="FormField_ApiKey" name="apikey" value="87e9zn7n5z8z129a">
+
+    <!-- Captcha-Honeypot-Feld (vom protect.js script automatisch befuellt) -->
+    <input type="hidden" id="FormField_Digit" name="fields[fieldDigit]" value="">
+
+    <div class="klicktipp-form__fields">
+
+      <!-- Vorname (Pflicht) -->
+      <div class="klicktipp-form__field">
+        <input
+          type="text"
+          id="FormField_FirstName"
+          name="fields[fieldFirstName]"
+          class="klicktipp-form__input"
+          placeholder="Vorname *"
+          autocomplete="given-name"
+          required>
+      </div>
+
+      <!-- Nachname (Pflicht) -->
+      <div class="klicktipp-form__field">
+        <input
+          type="text"
+          id="FormField_LastName"
+          name="fields[fieldLastName]"
+          class="klicktipp-form__input"
+          placeholder="Nachname *"
+          autocomplete="family-name"
+          required>
+      </div>
+
+      <!-- E-Mail (Pflicht, eigene Zeile) -->
+      <div class="klicktipp-form__field klicktipp-form__field--full">
+        <input
+          type="email"
+          id="FormField_EmailAddress"
+          name="email"
+          class="klicktipp-form__input"
+          placeholder="E-Mail-Adresse *"
+          autocomplete="email"
+          size="40"
+          required>
+      </div>
+
+      <!-- DSGVO-Checkbox (Pflicht, KlickTipp-Standard) -->
+      <div class="klicktipp-form__field klicktipp-form__field--full klicktipp-form__terms-wrap">
+        <label class="klicktipp-form__terms">
+          <input
+            type="checkbox"
+            id="DSGVOCheckbox"
+            name="fields[DSGVOCheckbox]"
+            class="ktv2-dsgvo-checkbox klicktipp-form__terms-check"
+            required>
+          <span class="klicktipp-form__terms-text">
+            Ich willige den Empfang des Newsletters ein, den ich jederzeit mit
+            nur einem Klick abbestellen kann, und bestätige die Verarbeitung
+            meiner Daten gemäß der
+            <a href="https://www.klicktipp.com/datenschutzerklarung/" target="_blank" rel="noopener noreferrer">Datenschutzerklärung</a>
+            durch KlickTipp.
+          </span>
+        </label>
+      </div>
+
+    </div>
+
+    <button type="submit" id="FormSubmit" name="FormSubmit" class="klicktipp-form__submit">
+      <span class="klicktipp-form__submit-label">Newsletter abonnieren</span>
+      <span class="klicktipp-form__submit-icon" aria-hidden="true">✓</span>
+    </button>
+  </form>
+</div>
+
+<!-- KlickTipp Captcha-Schutz (Pflicht-Script, sonst Submission abgelehnt) -->
+<script type="text/javascript" src="https://scripts.cdn.klicktipp.cloud/captcha/protect.js"></script>

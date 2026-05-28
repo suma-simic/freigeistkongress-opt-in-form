@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap">
 
   <!-- Form-Custom-Styles (absolute Pfade, damit /:slug/ keine Probleme macht) -->
-  <link rel="stylesheet" href="/form.css">
+  <link rel="stylesheet" href="/zoho-form/form.css">
 
   <style>
     /* ───────────────────────────────────────────────────────────────────
@@ -207,14 +207,14 @@
 
   <!-- Form via fetch reinladen (nur Demo-Komfort) -->
   <script>
-    fetch('/form.html')
+    fetch('/zoho-form/form.html')
       .then(function (r) { return r.text(); })
       .then(function (html) {
         document.getElementById('form-mount').innerHTML = html;
         // Inline-Scripts aus form.html werden via innerHTML NICHT ausgefuehrt.
         // Daher: manuell die Zoho-Validation-Vars setzen + Scripts nachladen.
         var s1 = document.createElement('script');
-        s1.src = '/zoho-validation.js';
+        s1.src = '/zoho-form/zoho-validation.js';
         s1.onload = function () {
           // Validation-Konfig aus form.html aktivieren
           window.dateAndMonthRegexFormateArray = zf_SetDateAndMonthRegexBasedOnDateFormate('dd-MMM-yyyy');
@@ -227,7 +227,7 @@
 
           // Partner-Slug-Reader nachladen
           var s2 = document.createElement('script');
-          s2.src = '/partner-slug.js';
+          s2.src = '/zoho-form/partner-slug.js';
           s2.onload = updateDebug;
           document.body.appendChild(s2);
         };

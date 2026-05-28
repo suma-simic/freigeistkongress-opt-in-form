@@ -1,211 +1,95 @@
-# Freigeistkongress · Opt-In-Form mit Partner-Tracking
+# Freigeistkongress · Opt-In-Formulare
 
-Anmelde-Formular für die **Freigeist Live Calls** auf freigeistkongress.com.
-Erfasst Teilnehmer des Online-Kongresses direkt in Zoho Forms → Zoho CRM
-(Kontakt-Modul) und trägt automatisch einen **Partner-Slug** mit, der aus
-der URL ausgelesen wird.
+Zwei Formulare zum Einbinden in **freigeistkongress.com**. Beide
+gestylt nach Tom's Theme (Cinzel-Headlines + Inter-Body, Pill-Inputs,
+Türkis-Akzent), beide unabhängig voneinander einsetzbar an verschiedenen
+Stellen der Seite.
 
 ## Live-Demo
 
 > **https://freigeistkongress-form-demo.netlify.app/marko-simic/**
 
-Probiere verschiedene Slugs aus, indem du das Pfadsegment änderst:
-`/marc-friedrich/`, `/joerg-schaefer/`, `/` (kein Partner), `/anna-mustermann/` …
-Der erkannte Slug wird live unter dem Formular angezeigt.
+Zeigt das Zoho-Form mit Partner-Tracking. Probiere verschiedene
+Pfadsegmente aus: `/marc-friedrich/`, `/joerg-schaefer/`, `/` (kein
+Partner). Der erkannte Slug wird live unter dem Formular angezeigt.
 
-> Die Demo dient nur der Veranschaulichung. Der Form-Code in diesem Repo ist
-> **unabhängig von der Demo** und kann frei in jede beliebige Webseite eingebaut
-> werden.
+## Was ist drin?
 
-## Worum geht's
+### 1. Zoho-Form mit Partner-Tracking → `zoho-form/`
 
-Jeder Vertriebspartner bekommt einen eigenen Anmelde-Link:
+**Hauptzweck:** Anmeldung der **Teilnehmer für die Freigeist Live Calls**.
 
-```
-freigeistkongress.com/marko-simic/
-freigeistkongress.com/anna-fitness/
-freigeistkongress.com/joerg-schaefer/
-```
+Schreibt direkt nach Zoho Forms → Zoho CRM (Kontakt-Modul). Liest aus der
+URL einen **Partner-Slug** aus (`/marko-simic/`) und trägt ihn ans CRM
+mit, damit später ausgewertet werden kann, welcher Partner wie viele
+Anmeldungen gebracht hat.
 
-Wenn jemand über so einen Link kommt und sich anmeldet, wird der **Partner**
-automatisch ans CRM mitgegeben. Damit sehen wir später in Zoho:
-*„Welcher Partner hat wie viele Anmeldungen gebracht?"*
+→ **Vollständige Anleitung: [`zoho-form/README.md`](zoho-form/README.md)**
 
-**Vorher (alt):** 200+ identische Landingpages, eine pro Partner — Wartungs-Alptraum.
+### 2. KlickTipp Newsletter-Opt-In → `klicktipp-newsletter/`
 
-**Jetzt (neu):** **Eine** Landingpage. Der Partner steckt in der URL. Ein
-kleines JS-Snippet liest die URL aus und füllt ein verstecktes Form-Feld.
-Browser-URL bleibt dabei sauber bei `freigeistkongress.com/marko-simic/` — kein
-`?Partner=…` in der Adresszeile.
+**Hauptzweck:** Newsletter-Anmeldung (Subscribe). Setzt automatisch den
+KlickTipp-Tag `NL - Opt-In_freigeistkongress`.
 
-## Wie das End-to-End funktioniert
+Zwei Integrations-Varianten dokumentiert:
+- **A — Raw-Code Embed** (empfohlen): direktes HTML, kein Server-Code
+- **B — Server-Side API**: für Custom-Logik, falls später benötigt
 
-```
-1. User klickt auf Partner-Link
-   freigeistkongress.com/marko-simic/
-            │
-2. Browser zeigt die Hauptseite        ◄── URL-Rewrite vom Server
-   (Tom's normale Anmelde-Sektion)
-            │
-3. partner-slug.js liest letztes Pfadsegment
-   "marko-simic" → schreibt es in das Hidden-Field "SingleLine5"
-            │
-4. User füllt Form aus, klickt "Anmelden"
-            │
-5. Form sendet POST an Zoho Forms
-   inkl. Hidden-Field-Wert "marko-simic"
-            │
-6. Zoho Forms → Zoho CRM Kontakt-Modul
-   ├─ Anrede, Vorname, Nachname, Email
-   └─ Partner Slug = "marko-simic"
-            │
-7. CRM-Workflow auf Kontakt-Insert (asynchron):
-   Suche im Custom-Modul "Formulare" nach Partner mit Slug = "marko-simic"
-   Setze Lookup-Feld "Verknüpfter Partner" auf den gefundenen Record
-            │
-8. Im CRM: Kontakt zeigt klickbar zum Partner-Profil
-   Auswertbar: "Wie viele Kontakte hat Partner XY gebracht?"
-```
+→ **Vollständige Anleitung: [`klicktipp-newsletter/README.md`](klicktipp-newsletter/README.md)**
 
-## Was im Repo ist
+## Welche Form gehört wohin?
 
-| Datei | Pflicht | Zweck |
-|---|---|---|
-| `form.html` | ✓ | Form-Markup zum Einbetten in deine Seite |
-| `form.css` | ✓ | Styling (Anrede-Select, Pill-Inputs, Submit-Button, Datenschutz-Checkbox, Mobile-Stack) |
-| `partner-slug.js` | ✓ | Liest URL-Slug, schreibt ihn ins Hidden-Field |
-| `zoho-validation.js` | ✓ | Zoho-eigenes Validation-Script (Pflichtfeld-Check, von Zoho exportiert) |
-| `demo.html` | optional | Standalone-Demo-Page (nur zum lokalen Anschauen) |
-| `_redirects` | optional | Netlify-Konfig für URL-Routing der Demo |
-| `README.md` | optional | Diese Datei |
-
-## Quick-Start: Form in deine Seite einbauen (Tom)
-
-### 1. Assets ausliefern
-
-`form.css`, `partner-slug.js`, `zoho-validation.js` in deinen Asset-Ordner
-legen (z.B. `assets/kongress/`) und im `<head>` bzw. vor `</body>` einbinden:
-
-```html
-<head>
-  <!-- … deine bestehenden Stylesheets … -->
-  <link rel="stylesheet" href="/assets/kongress/form.css">
-</head>
-<body>
-  <!-- … deine Seite … -->
-
-  <script src="/assets/kongress/zoho-validation.js"></script>
-  <script src="/assets/kongress/partner-slug.js"></script>
-</body>
-```
-
-### 2. Form-Markup einbauen
-
-Inhalt von `form.html` an die Stelle der bestehenden Anmelde-Sektion
-kopieren. Die Wrapper-Elemente (Headline, Eyebrow, Beschreibungstext)
-gehören dir, das Formular dazwischen kommt aus `form.html`:
-
-```html
-<section id="anmeldung">
-  <span class="section__eyebrow">Kostenlos anmelden</span>
-  <h2 class="section__title">Werde Teil der Bewegung</h2>
-  <p>Melde dich kostenlos an …</p>
-
-  <!-- HIER: Inhalt von form.html einfügen -->
-
-</section>
-```
-
-### 3. URL-Routing einrichten
-
-Damit `freigeistkongress.com/marko-simic/` die Hauptseite ausliefert
-(statt 404), brauchst du ein Server-Rewrite. Wähle nach deinem Hoster:
-
-#### Netlify (`_redirects` im Web-Root)
-
-```
-/:slug/  /index.html  200
-/:slug   /index.html  200
-```
-
-#### Apache (`.htaccess` im Web-Root)
-
-```apache
-RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^([a-z0-9]+(-[a-z0-9]+)*)/?$ /index.html [L]
-```
-
-#### Nginx
-
-```nginx
-location / {
-  try_files $uri $uri/ /index.html;
-}
-```
-
-#### Cloudflare Pages
-
-In den Build-Settings „SPA-Fallback" aktivieren, oder per
-`_redirects`-Datei wie bei Netlify.
-
-### Fertig
-
-Das war's. Teste mit `https://deine-domain/marko-simic/` und prüfe in den
-Browser-DevTools, dass die Form ein Hidden-Field `name="SingleLine5"` mit
-dem Wert `marko-simic` enthält.
-
-## Anpassen: Styling
-
-Die CSS-Klassen in `form.css` sind so gebaut, dass sie sich gut an dein
-bestehendes Theme anpassen lassen. Sie nutzen **CSS-Custom-Properties mit
-Fallbacks** — wenn du `--primary`, `--font-display`, `--black` etc. in deinem
-Stylesheet vorher definierst, übernimmt die Form automatisch deine Werte.
-
-Wichtige Klassen, die du überschreiben kannst:
-
-| Klasse | Was es ist |
+| Was passiert | Welche Form |
 |---|---|
-| `.newsletter-form` | Form-Wrapper |
-| `.newsletter-input` | Text-Inputs (Vorname, Nachname, Email) |
-| `.kongress-form__select` | Anrede-Dropdown |
-| `.kongress-form__terms` | Datenschutz-Checkbox-Zeile |
-| `.kongress-form__submit` | Submit-Button (Pill-Shape mit Gradient) |
-| `.kongress-form__error` | Validierungs-Fehlertext |
+| User meldet sich für die **Live Calls** an (Hauptangebot) | `zoho-form/` |
+| User abonniert den **Newsletter** (Lead-Magnet, niedrige Schwelle) | `klicktipp-newsletter/` |
 
-## Anpassen: Wording / Felder
+Beide können auf derselben Seite an verschiedenen Stellen koexistieren —
+z.B. die Zoho-Form im Hero-Bereich („Jetzt für die Live Calls anmelden"),
+die KlickTipp-Form im Footer („Newsletter abonnieren").
 
-In `form.html` kannst du frei anpassen:
+## Repo-Struktur
 
-| Stelle | Was du ändern kannst |
+```
+freigeistkongress-opt-in-form/
+├── README.md                    ← diese Datei (Übersicht)
+├── demo.html                    ← Live-Demo (zeigt die Zoho-Form)
+├── _redirects                   ← Netlify-Konfig für die Demo
+│
+├── zoho-form/                   ← Form 1: Anmeldung Live Calls
+│   ├── README.md                ← Anleitung
+│   ├── form.html
+│   ├── form.css
+│   ├── partner-slug.js
+│   └── zoho-validation.js
+│
+└── klicktipp-newsletter/        ← Form 2: Newsletter-Opt-In
+    ├── README.md                ← Anleitung (Variante A + B)
+    ├── form.html
+    └── form.css
+```
+
+## Anpassen, ja oder nein?
+
+| Was | Darfst du anpassen? |
 |---|---|
-| Placeholder `"Vorname *"`, `"Nachname *"`, etc. | Wording |
-| Datenschutz-Text und -Link | DSGVO-Wording, URL |
-| Submit-Button-Text `"Jetzt kostenlos anmelden"` | Call-to-Action |
+| Styling (CSS, Farben, Schriften, Abstände) | ✓ frei |
+| Wording (Placeholder, Button-Text, DSGVO-Text) | ✓ frei |
+| Layout der umgebenden Section (Headline, Beschreibungstext) | ✓ frei, gehört dir |
+| Form-Action-URLs | ✗ nicht ändern |
+| Field-Namen (`name="…"` Attribute) | ✗ nicht ändern |
+| `zoho-validation.js` Inhalt | ✗ nicht ändern |
+| KlickTipp Captcha-Script-URL | ✗ nicht ändern |
 
-**Nicht ändern** ohne mit dem CRM-Setup abzustimmen:
-
-- `<form action="…">` — Zoho-Form-URL
-- `name="Dropdown"`, `name="Name_First"`, `name="Name_Last"`, `name="Email"`,
-  `name="TermsConditions"`, `name="SingleLine5"` — Zoho-interne Field-Namen
-- Inhalt von `zoho-validation.js`
-- `zf_MandArray` und `zf_FieldArray` in `form.html`
-
-Wenn du Felder hinzufügen/entfernen willst → bitte mit Marko abstimmen, weil
-auch das Form in Zoho Forms und das CRM-Mapping angepasst werden müssen.
-
-## Sicherheits-Hinweis
-
-Die Form schickt Daten direkt an Zoho. Der Endpunkt ist öffentlich (das ist
-bei Web-Forms normal). Zoho hat eingebauten Spam-Schutz und Rate-Limiting.
-Wenn nötig, lässt sich später ein Honeypot oder reCAPTCHA ergänzen.
+Wenn du Felder hinzufügen oder entfernen willst → kurz mit Marko
+abstimmen, weil dann auch das Form bei Zoho bzw. KlickTipp angepasst
+werden muss.
 
 ## Wartung & Kontakt
 
 | Rolle | Wer | Wofür |
 |---|---|---|
-| Tech-Lead | Marko Simic, SuMa SIMIC Consulting LTD ([m.simic@suma-consulting.com](mailto:m.simic@suma-consulting.com)) | Form-Logik, Slug-Vergabe, CRM-Setup |
+| Tech-Lead | Marko Simic, SuMa SIMIC Consulting LTD ([m.simic@suma-consulting.com](mailto:m.simic@suma-consulting.com)) | Form-Logik, Slug-Vergabe, CRM- + KlickTipp-Setup |
 | CRM-Owner | Bruno Hillebrand | Zoho-Forms-UI, Zoho-CRM-Pflege |
 | Webdesign / Hosting | Tom | Einbau in freigeistkongress.com, Styling |
 
