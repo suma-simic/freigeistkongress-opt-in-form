@@ -194,24 +194,6 @@ In `form.html` kannst du frei anpassen:
 Wenn du Felder hinzufügen/entfernen willst → bitte mit Marko abstimmen, weil
 auch das Form in Zoho Forms und das CRM-Mapping angepasst werden müssen.
 
-## Wie Partner-Slugs vergeben werden
-
-Marko pflegt die Slugs im Zoho-CRM-Custom-Modul „Formulare" (Feld
-`Partner Slug`). Schema: `vorname-nachname` (lowercase, Umlaute zu ae/oe/ue,
-Sonderzeichen weg, Bindestrich-Trennung).
-
-Beispiele:
-
-| Partner | Slug | Link |
-|---|---|---|
-| Marc Friedrich | `marc-friedrich` | `freigeistkongress.com/marc-friedrich/` |
-| Jörg Schäfer | `joerg-schaefer` | `freigeistkongress.com/joerg-schaefer/` |
-| Andreas Popp | `andreas-popp` | `freigeistkongress.com/andreas-popp/` |
-
-Bei Slug-Konflikten (zwei Partner mit gleichem Namen) bekommt der zweite
-einen Suffix `-2`, `-3`, etc. Die Slug-Eindeutigkeit wird in Zoho per
-Unique-Constraint sichergestellt.
-
 ## Sicherheits-Hinweis
 
 Die Form schickt Daten direkt an Zoho. Der Endpunkt ist öffentlich (das ist
