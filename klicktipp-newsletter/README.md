@@ -94,10 +94,40 @@ KlickTipp
 
 ### Benötigt
 
-- **Account-API-Key** (geheim — nicht im Repo, nicht ins HTML, in
-  Server-Env-Variable). Bekommst du von Marko via separaten Channel.
+- **Account-API-Key** von KlickTipp — siehe nächster Abschnitt
 - Server-Code (PHP, Node, etc.) der die KlickTipp-API aufruft
 - Eigener Captcha-Schutz (z.B. hCaptcha, reCAPTCHA)
+
+### Wie kommst du an den Account-API-Key?
+
+Der Account-API-Key ist **geheim** und darf niemals ins Repo, nicht ins
+HTML, nicht in offene Chat-Channels. Workflow für die Übergabe:
+
+1. **Du meldest dich bei Marko** ([m.simic@suma-consulting.com](mailto:m.simic@suma-consulting.com)
+   oder Telegram): *„Ich setze Variante B um, brauche den KlickTipp-Account-API-Key."*
+2. **Marko schickt den Key über einen sicheren Channel** — Signal,
+   Bitwarden-Share (einmal-öffenbarer Link), 1Password-Share o.ä.
+   Nicht über Telegram oder Email im Klartext.
+3. **Du legst auf deinem Server eine `.env`-Datei** im Web-Root an,
+   chmod 600 (nur Owner-Read), trägst dort den Key ein:
+   ```env
+   KLICKTIPP_API_KEY=re_xxxxxxxxxxxxxxxx
+   ```
+4. **In deinem `.gitignore`** (in deinem Webseiten-Repo, nicht hier):
+   ```
+   .env
+   .env.local
+   ```
+5. **Im PHP-Code** liest du den Key per `getenv()`:
+   ```php
+   $apiKey = getenv('KLICKTIPP_API_KEY');
+   ```
+
+Eine Vorlage liegt in diesem Repo unter `.env.example` — kopiere die zu
+`.env` und trag deinen erhaltenen Key ein.
+
+Bei Leak (z.B. Server-Kompromittierung): Marko rotiert den Key in
+KlickTipp und schickt dir den neuen.
 
 ### Beispiel-Endpunkt (PHP)
 
