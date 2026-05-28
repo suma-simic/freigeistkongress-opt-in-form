@@ -37,16 +37,29 @@ Zwei Integrations-Varianten dokumentiert:
 
 → **Vollständige Anleitung: [`klicktipp-newsletter/README.md`](klicktipp-newsletter/README.md)**
 
+### 3. Kontakt-Formular → `kontakt-form/`
+
+**Hauptzweck:** Klassisches Kontaktformular für allgemeine Anfragen,
+Presse, Speaker-Anfragen, Bug-Meldungen.
+
+Submissions gehen direkt an Zoho Forms (von dort weiter ins CRM oder als
+E-Mail). Felder: Anrede, Vor- + Nachname, E-Mail, Betreff (5 Optionen),
+Nachricht, Datenschutz.
+
+→ **Vollständige Anleitung: [`kontakt-form/README.md`](kontakt-form/README.md)**
+
 ## Welche Form gehört wohin?
 
 | Was passiert | Welche Form |
 |---|---|
 | User meldet sich für die **Live Calls** an (Hauptangebot) | `zoho-form/` |
 | User abonniert den **Newsletter** (Lead-Magnet, niedrige Schwelle) | `klicktipp-newsletter/` |
+| User schreibt das **Team an** (Anfrage, Presse, Bug, etc.) | `kontakt-form/` |
 
-Beide können auf derselben Seite an verschiedenen Stellen koexistieren —
-z.B. die Zoho-Form im Hero-Bereich („Jetzt für die Live Calls anmelden"),
-die KlickTipp-Form im Footer („Newsletter abonnieren").
+Alle drei können auf der Seite koexistieren — z.B. die Zoho-Form im
+Hero-Bereich („Jetzt für die Live Calls anmelden"), die KlickTipp-Form
+im Footer („Newsletter abonnieren"), die Kontakt-Form auf einer eigenen
+`/kontakt/`-Unterseite.
 
 ## Repo-Struktur
 
@@ -63,10 +76,17 @@ freigeistkongress-opt-in-form/
 │   ├── partner-slug.js
 │   └── zoho-validation.js
 │
-└── klicktipp-newsletter/        ← Form 2: Newsletter-Opt-In
-    ├── README.md                ← Anleitung (Variante A + B)
+├── klicktipp-newsletter/        ← Form 2: Newsletter-Opt-In
+│   ├── README.md                ← Anleitung (Variante A + B)
+│   ├── .env.example             ← Vorlage für Variante B
+│   ├── form.html
+│   └── form.css
+│
+└── kontakt-form/                ← Form 3: Kontakt-Formular
+    ├── README.md                ← Anleitung
     ├── form.html
-    └── form.css
+    ├── form.css
+    └── zoho-validation.js       ← identisch zu zoho-form/zoho-validation.js
 ```
 
 ## Anpassen, ja oder nein?

@@ -1,0 +1,150 @@
+<!--
+  ═══════════════════════════════════════════════════════════════════════════
+  Freigeistkongress · Kontaktformular (Zoho Forms)
+  ═══════════════════════════════════════════════════════════════════════════
+
+  Klassisches Kontakt-Formular fuer freigeistkongress.com. Submissions
+  gehen direkt an Zoho Forms (und je nach Zoho-Setup weiter ins CRM /
+  Helpdesk).
+
+  Pflichtfelder: Anrede, Vorname, Nachname, E-Mail, DSGVO-Checkbox.
+  Optional: Betreff/Anliegen (5 vordefinierte Optionen), Nachricht.
+
+  Pflicht-Skripte (vor </body>):
+    <link rel="stylesheet" href="form.css">
+    <script src="zoho-validation.js"></script>
+  ═══════════════════════════════════════════════════════════════════════════
+-->
+
+<form
+  class="kontakt-form"
+  id="kontakt-form"
+  name="form"
+  action="https://forms.zohopublic.com/kompassderfreiheitllc1/form/FreigeistkongressKontaktformular/formperma/0EPObsQGCkkgyThT_d0zCAePcwBqpFGzmtWPuanrlZE/htmlRecords/submit"
+  method="POST"
+  accept-charset="UTF-8"
+  enctype="multipart/form-data"
+  onsubmit="document.charset='UTF-8'; return zf_ValidateAndSubmit();">
+
+  <!-- Zoho-Built-in Tracking-Felder (leer lassen) -->
+  <input type="hidden" name="zf_referrer_name" value="">
+  <input type="hidden" name="zf_redirect_url" value="">
+  <input type="hidden" name="zc_gad" value="">
+
+  <div class="kontakt-form__fields">
+
+    <!-- Anrede (Pflicht) -->
+    <div class="kontakt-form__field">
+      <select
+        class="kontakt-form__input kontakt-form__select"
+        name="Dropdown"
+        checktype="c1"
+        aria-label="Anrede">
+        <option selected value="-Select-">Anrede *</option>
+        <option value="Herr">Herr</option>
+        <option value="Frau">Frau</option>
+      </select>
+      <p id="Dropdown_error" class="kontakt-form__error">Bitte Anrede wählen.</p>
+    </div>
+
+    <!-- Vorname (Pflicht) -->
+    <div class="kontakt-form__field">
+      <input
+        class="kontakt-form__input"
+        type="text"
+        name="Name_First"
+        maxlength="255"
+        fieldType="7"
+        placeholder="Vorname *"
+        autocomplete="given-name">
+    </div>
+
+    <!-- Nachname (Pflicht) -->
+    <div class="kontakt-form__field">
+      <input
+        class="kontakt-form__input"
+        type="text"
+        name="Name_Last"
+        maxlength="255"
+        fieldType="7"
+        placeholder="Nachname *"
+        autocomplete="family-name">
+      <p id="Name_error" class="kontakt-form__error">Bitte Vor- und Nachnamen ausfüllen.</p>
+    </div>
+
+    <!-- E-Mail (Pflicht, eigene Zeile) -->
+    <div class="kontakt-form__field kontakt-form__field--full">
+      <input
+        class="kontakt-form__input"
+        type="email"
+        name="Email"
+        checktype="c5"
+        maxlength="255"
+        fieldType="9"
+        placeholder="E-Mail-Adresse *"
+        autocomplete="email">
+      <p id="Email_error" class="kontakt-form__error">Bitte eine gültige E-Mail-Adresse eingeben.</p>
+    </div>
+
+    <!-- Betreff / Anliegen (optional, eigene Zeile) -->
+    <div class="kontakt-form__field kontakt-form__field--full">
+      <select
+        class="kontakt-form__input kontakt-form__select"
+        name="Dropdown1"
+        checktype="c1"
+        aria-label="Betreff / Anliegen">
+        <option selected value="-Select-">Betreff / Anliegen</option>
+        <option value="Allgemeine Anfrage">Allgemeine Anfrage</option>
+        <option value="Presse &amp; kooperation">Presse &amp; Kooperation</option>
+        <option value="Speaker Anfrage">Speaker-Anfrage</option>
+        <option value="Technisches Problem / Bug melden">Technisches Problem / Bug melden</option>
+        <option value="Sonstiges">Sonstiges</option>
+      </select>
+    </div>
+
+    <!-- Nachricht (optional, Textarea) -->
+    <div class="kontakt-form__field kontakt-form__field--full">
+      <textarea
+        class="kontakt-form__input kontakt-form__textarea"
+        name="MultiLine"
+        checktype="c1"
+        maxlength="65535"
+        rows="6"
+        placeholder="Wie können wir helfen?"></textarea>
+    </div>
+
+    <!-- Datenschutz (Pflicht-Checkbox) -->
+    <div class="kontakt-form__field kontakt-form__field--full kontakt-form__terms-wrap">
+      <label class="kontakt-form__terms">
+        <input
+          type="checkbox"
+          name="TermsConditions"
+          class="kontakt-form__terms-check">
+        <span class="kontakt-form__terms-text">
+          Ich stimme der <a href="https://freigeistkongress.com/datenschutz/" target="_blank" rel="noopener noreferrer">Datenschutzerklärung</a> zu.
+        </span>
+      </label>
+      <p id="TermsConditions_error" class="kontakt-form__error">Bitte den Datenschutz-Hinweis bestätigen.</p>
+    </div>
+
+  </div>
+
+  <button type="submit" class="kontakt-form__submit">
+    <span class="kontakt-form__submit-label">Nachricht senden</span>
+    <svg class="kontakt-form__submit-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <line x1="22" y1="2" x2="11" y2="13"></line>
+      <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+    </svg>
+  </button>
+</form>
+
+<!-- Zoho-Validation-Konfiguration (notwendig fuer zoho-validation.js) -->
+<script>
+  var dateAndMonthRegexFormateArray = zf_SetDateAndMonthRegexBasedOnDateFormate('dd-MMM-yyyy');
+  var zf_DateRegex = new RegExp(dateAndMonthRegexFormateArray[0]);
+  var zf_MonthYearRegex = new RegExp(dateAndMonthRegexFormateArray[1]);
+  var zf_MandArray  = ["Dropdown", "Name_First", "Name_Last", "Email", "TermsConditions"];
+  var zf_FieldArray = ["Dropdown", "Name_First", "Name_Last", "Email", "Dropdown1", "MultiLine", "TermsConditions"];
+  var isSalesIQIntegrationEnabled = false;
+  var salesIQFieldsArray = [];
+</script>
