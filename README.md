@@ -1,8 +1,9 @@
 # Freigeistkongress · Opt-In-Form mit Partner-Tracking
 
-Anmelde-Formular für **freigeistkongress.com**. Schreibt Newsletter-Anmeldungen
-direkt nach Zoho Forms → Zoho CRM (Kontakt-Modul) und trägt automatisch
-einen **Partner-Slug** mit, der aus der URL ausgelesen wird.
+Anmelde-Formular für die **Freigeist Live Calls** auf freigeistkongress.com.
+Erfasst Teilnehmer des Online-Kongresses direkt in Zoho Forms → Zoho CRM
+(Kontakt-Modul) und trägt automatisch einen **Partner-Slug** mit, der aus
+der URL ausgelesen wird.
 
 ## Live-Demo
 
