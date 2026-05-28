@@ -1,0 +1,236 @@
+/* ═════════════════════════════════════════════════════════════════════════
+   Freigeistkongress · Opt-In-Form Custom Styles
+   ─────────────────────────────────────────────────────────────────────────
+   Erweitert Tom's vorhandene .newsletter-form / .newsletter-input / .nl-fields
+   um:
+     - 4-Feld-Layout (Anrede + Vorname + Nachname + E-Mail)
+     - Anrede als Pill-Select
+     - Datenschutz-Checkbox
+     - Pill-Shape Submit-Button mit Gradient
+     - Mobile-Stack-Layout
+
+   CSS-Custom-Properties werden mit Fallbacks referenziert. Wenn Tom's
+   Stylesheet vorher geladen wird, gewinnen seine Werte. Ohne Tom's CSS
+   funktioniert die Form standalone (Demo-Page).
+   ═════════════════════════════════════════════════════════════════════════ */
+
+/* ─── Honeypot (unsichtbar, Bots fuellen es trotzdem) ──────────────────── */
+.kongress-form__honeypot {
+  position: absolute !important;
+  left: -10000px !important;
+  top: auto !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+}
+
+/* ─── Field-Grid: Anrede | Vorname | Nachname (Desktop) ────────────────── */
+.kongress-form__fields {
+  display: grid;
+  grid-template-columns: 0.7fr 1fr 1fr;
+  gap: 16px 20px;
+  max-width: 850px;
+  margin: 0 auto 28px;
+  align-items: start;
+}
+
+/* Einzelne Felder spannen 1 Spalte */
+.kongress-form__field {
+  position: relative;
+  min-width: 0;
+}
+
+/* E-Mail und Checkbox spannen alle 3 Spalten */
+.kongress-form__field--full {
+  grid-column: 1 / -1;
+}
+
+/* ─── Anrede-Select (sieht aus wie newsletter-input, mit Caret) ────────── */
+.kongress-form__select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, currentColor 50%),
+    linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position:
+    calc(100% - 18px) calc(50% - 2px),
+    calc(100% - 13px) calc(50% - 2px);
+  background-size: 5px 5px;
+  background-repeat: no-repeat;
+  padding-right: 38px;
+  cursor: pointer;
+  color: var(--white, #1C1209);
+}
+
+.kongress-form__select option {
+  color: var(--text-main, #1C1209);
+  background: var(--black-card, #FFFFFF);
+}
+
+/* Wenn Default-Option gewaehlt, Placeholder-Farbe */
+.kongress-form__select:invalid,
+.kongress-form__select option[value="-Select-"] {
+  color: var(--white-20, rgba(28,18,9,0.35));
+}
+
+/* ─── Validierungs-Fehlermeldung ───────────────────────────────────────── */
+.kongress-form__error {
+  display: none;
+  margin: 6px 4px 0;
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 0.78rem;
+  color: #C0392B;
+  letter-spacing: 0.2px;
+}
+
+/* Zoho-Validation toggles display via inline style (display:block).
+   Wir respektieren das, geben aber zusaetzliches Spacing. */
+.kongress-form__error[style*="block"] {
+  display: block !important;
+}
+
+/* ─── Datenschutz-Checkbox ─────────────────────────────────────────────── */
+.kongress-form__terms-wrap {
+  margin-top: 4px;
+}
+
+.kongress-form__terms {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--text-soft, #3D2B1C);
+  padding: 4px 0;
+}
+
+.kongress-form__terms-check {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  accent-color: var(--primary, #2F809A);
+  cursor: pointer;
+}
+
+.kongress-form__terms-text a {
+  color: var(--primary, #2F809A);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.kongress-form__terms-text a:hover {
+  color: var(--primary-dark, #1E5C6F);
+}
+
+/* ─── Submit-Button (Pill, Gradient, mit Shine-Hover) ──────────────────── */
+.kongress-form__submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 0 auto;
+
+  padding: 14px 36px;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(135deg,
+              var(--primary-dark, #1E5C6F),
+              var(--primary, #2F809A),
+              var(--primary-light, #4FA6C2));
+  box-shadow: 0 4px 24px rgba(26, 107, 130, 0.25);
+
+  color: #FFFFFF;
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 250ms ease, box-shadow 250ms ease;
+}
+
+.kongress-form__submit::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg,
+              transparent,
+              rgba(255, 255, 255, 0.22),
+              transparent);
+  transition: left 500ms ease;
+}
+
+.kongress-form__submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 40px rgba(26, 107, 130, 0.4);
+}
+
+.kongress-form__submit:hover::before {
+  left: 100%;
+}
+
+.kongress-form__submit:focus-visible {
+  outline: 3px solid var(--primary-glow, rgba(47, 128, 154, 0.35));
+  outline-offset: 3px;
+}
+
+.kongress-form__submit-icon {
+  font-size: 0.95rem;
+  line-height: 1;
+  margin-top: -1px;
+}
+
+/* Wrapper fuer Button-Zentrierung */
+.kongress-form {
+  text-align: center;
+}
+
+/* ─── Mobile: alle Felder gestapelt ────────────────────────────────────── */
+@media (max-width: 700px) {
+  .kongress-form__fields {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .kongress-form__submit {
+    width: 100%;
+    max-width: 320px;
+  }
+}
+
+/* ─── Default-Styles wenn Tom's newsletter-input CSS fehlt ─────────────── *
+ * Greift NUR wenn .newsletter-input nicht von einem anderen Stylesheet
+ * gestylt wurde. Tom's Werte gewinnen automatisch (Specificity gleich,
+ * spaeter geladenes Stylesheet ueberschreibt; Tom laedt seins zuerst).
+ * ────────────────────────────────────────────────────────────────────── */
+.kongress-form .newsletter-input {
+  width: 100%;
+  background: var(--black, #F7F3EC);
+  border: 1px solid var(--border, rgba(47, 128, 154, 0.22));
+  border-radius: 40px;
+  padding: 16px 26px;
+  color: var(--white, #1C1209);
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 0.95rem;
+  transition: border-color 250ms ease, box-shadow 250ms ease;
+  box-sizing: border-box;
+}
+
+.kongress-form .newsletter-input::placeholder {
+  color: var(--white-20, rgba(28, 18, 9, 0.35));
+}
+
+.kongress-form .newsletter-input:focus {
+  border-color: var(--primary, #2F809A);
+  box-shadow: 0 0 0 3px var(--primary-glow, rgba(47, 128, 154, 0.15));
+  outline: none;
+}

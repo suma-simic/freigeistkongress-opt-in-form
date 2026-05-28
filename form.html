@@ -1,0 +1,137 @@
+<!--
+  ═══════════════════════════════════════════════════════════════════════════
+  Freigeistkongress · Opt-In-Form-Snippet (Zoho Forms → Zoho CRM)
+  ═══════════════════════════════════════════════════════════════════════════
+
+  Einbettung in eine bestehende <section> der Landingpage. Die Form nutzt
+  Tom's CSS-Klassen (.newsletter-form, .newsletter-input, .nl-fields), damit
+  sie sich nahtlos ins bestehende Design einfügt. Zusätzliche Styles in
+  form.css ergänzen Layout für Anrede-Select + Checkbox + Submit-Button.
+
+  Pflicht-Skripte (vor </body>):
+    <link rel="stylesheet" href="form.css">
+    <script src="zoho-validation.js"></script>
+    <script src="partner-slug.js"></script>
+
+  URL-Routing: /:slug/ → /index.html (Server-Rewrite, siehe README.md).
+  ═══════════════════════════════════════════════════════════════════════════
+-->
+
+<form
+  class="newsletter-form kongress-form"
+  id="kongress-form"
+  name="form"
+  action="https://forms.zohopublic.com/kompassderfreiheitllc1/form/FreigeistkongressOptInHomepage/formperma/Nh4YbB4WfNymsoVth2y7H_eZlnQ4Li24L6SR2-n1RjY/htmlRecords/submit"
+  method="POST"
+  accept-charset="UTF-8"
+  enctype="multipart/form-data"
+  onsubmit="document.charset='UTF-8'; return zf_ValidateAndSubmit();">
+
+  <!--
+    Partner-Slug · aus URL ausgelesen via partner-slug.js, ans CRM gemappt.
+    Wichtig: name="SingleLine5" ist Zoho's interner Field-Name (NICHT umbenennen!).
+    Das Mapping zu CRM Contacts.Partner_Slug erfolgt in der Zoho-Forms-Integrations-
+    Config (Form-Label "Partner_Slug" → CRM-Field "Partner_Slug").
+  -->
+  <input type="hidden" name="SingleLine5" id="partner-slug" value="">
+
+  <!-- Zoho-Built-in Tracking-Felder (leer lassen, oder Default-Werte setzen) -->
+  <input type="hidden" name="zf_referrer_name" value="">
+  <input type="hidden" name="zf_redirect_url" value="">
+  <input type="hidden" name="zc_gad" value="">
+
+  <!-- Honeypot gegen Bot-Submissions (Zoho-eigener Spam-Schutz reicht meist, aber Belt-and-Suspenders) -->
+  <label class="kongress-form__honeypot" aria-hidden="true">
+    Bitte dieses Feld leer lassen.
+    <input type="text" name="kongress_hp" tabindex="-1" autocomplete="off">
+  </label>
+
+  <div class="nl-fields kongress-form__fields">
+
+    <!-- Anrede (Pflicht) -->
+    <div class="kongress-form__field">
+      <select
+        class="newsletter-input kongress-form__select"
+        name="Dropdown"
+        checktype="c1"
+        aria-label="Anrede">
+        <option selected value="-Select-">Anrede *</option>
+        <option value="Herr">Herr</option>
+        <option value="Frau">Frau</option>
+      </select>
+      <p id="Dropdown_error" class="kongress-form__error">Bitte Anrede wählen.</p>
+    </div>
+
+    <!-- Vorname (Pflicht) -->
+    <div class="kongress-form__field">
+      <input
+        class="newsletter-input"
+        type="text"
+        name="Name_First"
+        maxlength="255"
+        fieldType="7"
+        placeholder="Vorname *"
+        autocomplete="given-name">
+    </div>
+
+    <!-- Nachname (Pflicht) -->
+    <div class="kongress-form__field">
+      <input
+        class="newsletter-input"
+        type="text"
+        name="Name_Last"
+        maxlength="255"
+        fieldType="7"
+        placeholder="Nachname *"
+        autocomplete="family-name">
+      <p id="Name_error" class="kongress-form__error">Bitte Vor- und Nachnamen ausfüllen.</p>
+    </div>
+
+    <!-- E-Mail (Pflicht, eigene Zeile) -->
+    <div class="kongress-form__field kongress-form__field--full">
+      <input
+        class="newsletter-input"
+        type="email"
+        name="Email"
+        checktype="c5"
+        maxlength="255"
+        fieldType="9"
+        placeholder="E-Mail-Adresse *"
+        autocomplete="email">
+      <p id="Email_error" class="kongress-form__error">Bitte eine gültige E-Mail-Adresse eingeben.</p>
+    </div>
+
+    <!-- Datenschutz (Pflicht-Checkbox) -->
+    <div class="kongress-form__field kongress-form__field--full kongress-form__terms-wrap">
+      <label class="kongress-form__terms">
+        <input
+          type="checkbox"
+          name="TermsConditions"
+          class="kongress-form__terms-check">
+        <span class="kongress-form__terms-text">
+          Wir geben deine Daten niemals an Dritte weiter. Du kannst deine
+          E-Mail-Adresse jederzeit mit nur einem Mausklick aus unserem System
+          löschen. <a href="https://freigeistkongress.com/datenschutz/" target="_blank" rel="noopener noreferrer">Informationen zum Datenschutz</a>.
+        </span>
+      </label>
+      <p id="TermsConditions_error" class="kongress-form__error">Bitte den Datenschutz-Hinweis bestätigen.</p>
+    </div>
+
+  </div>
+
+  <button type="submit" class="kongress-form__submit">
+    <span class="kongress-form__submit-label">Jetzt kostenlos anmelden</span>
+    <span class="kongress-form__submit-icon" aria-hidden="true">✓</span>
+  </button>
+</form>
+
+<!-- Zoho-Validation-Konfiguration (notwendig fuer zoho-validation.js) -->
+<script>
+  var dateAndMonthRegexFormateArray = zf_SetDateAndMonthRegexBasedOnDateFormate('dd-MMM-yyyy');
+  var zf_DateRegex = new RegExp(dateAndMonthRegexFormateArray[0]);
+  var zf_MonthYearRegex = new RegExp(dateAndMonthRegexFormateArray[1]);
+  var zf_MandArray  = ["Dropdown", "Name_First", "Name_Last", "Email", "TermsConditions"];
+  var zf_FieldArray = ["Dropdown", "Name_First", "Name_Last", "Email", "SingleLine5", "TermsConditions"];
+  var isSalesIQIntegrationEnabled = false;
+  var salesIQFieldsArray = [];
+</script>

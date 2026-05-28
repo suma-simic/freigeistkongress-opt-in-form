@@ -1,0 +1,11 @@
+# Netlify-Redirects fuer Freigeistkongress-Demo
+#
+# Catch-all: jeder Pfad /<slug>/ liefert die Demo aus, der Slug bleibt
+# in der Browser-URL (Status 200 = Rewrite, nicht Redirect).
+# Existierende Files (form.css, partner-slug.js, etc.) gehen vor und
+# werden direkt ausgeliefert.
+#
+# Root (/) liefert demo.html (kein Slug erkannt → kein Partner).
+
+/        /demo.html  200
+/*       /demo.html  200
